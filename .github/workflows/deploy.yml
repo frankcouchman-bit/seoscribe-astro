@@ -1,8 +1,8 @@
-name: Deploy to GitHub Pages
+name: Deploy Astro to GitHub Pages
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ main ]
   workflow_dispatch:
 
 permissions:
@@ -20,20 +20,28 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 20
+          cache: 'npm'
+
       - name: Install
-        run: npm install
+        run: npm ci
+
+      # Astro will still work even if you don't set PUBLIC_API_URL.
+      # Index file already defaults to your Worker URL.
       - name: Build
-        env:
-          PUBLIC_API_URL: ${{ secrets.PUBLIC_API_URL }}
         run: npm run build
+        env:
+          PUBLIC_API_URL: ${{ vars.PUBLIC_API_URL }}
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: dist
+          path: ./dist
+
   deploy:
     needs: build
     runs-on: ubuntu-latest
@@ -41,6 +49,6 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - name: Deploy
+      - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4

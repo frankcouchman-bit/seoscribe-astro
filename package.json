@@ -1,0 +1,17 @@
+{
+  "name": "seoscribe-astro",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "format": "prettier -w ."
+  },
+  "devDependencies": {
+    "astro": "^4.12.2",
+    "prettier": "^3.2.5",
+    "prettier-plugin-astro": "^0.14.1"
+  }
+}

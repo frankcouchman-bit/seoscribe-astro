@@ -1,5 +1,6 @@
 ---
-const API_URL = import.meta.env.PUBLIC_API_URL || "";
+/* Inject your API URL. Defaults to your Worker domain so it works out of the box. */
+const API_URL = import.meta.env.PUBLIC_API_URL || "https://seoscribe.frank-couchman.workers.dev";
 ---
 
 <!DOCTYPE html>
@@ -51,7 +52,7 @@ const API_URL = import.meta.env.PUBLIC_API_URL || "";
   <link rel="preload" as="image" href="/hero.png" imagesrcset="/hero.png 1x" fetchpriority="high" />
   <link rel="preload" as="image" href="/1.jpeg" imagesrcset="/1.jpeg 1x" />
 
-  <!-- Tailwind & Icons -->
+  <!-- Tailwind (CDN) & Icons -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
 
@@ -139,13 +140,12 @@ const API_URL = import.meta.env.PUBLIC_API_URL || "";
 <body class="grid-bg">
   <div id="app"></div>
 
-  <!-- Inject PUBLIC_API_URL into a real const the app already expects -->
+  <!-- Make the API URL available to the client JS -->
   <script is:inline>
     const API_URL = {JSON.stringify(API_URL)};
   </script>
 
-  <!-- Your app script (unchanged logic; premium look via styles above).
-       NOTE: removed the old hardcoded const API_URL and the duplicate renderLandingRest(). -->
+  <!-- App (UI + all logic) -->
   <script>
     // ----------- APPLICATION STATE -----------
     const todayStr = () => new Date().toISOString().split('T')[0];
@@ -600,7 +600,7 @@ const API_URL = import.meta.env.PUBLIC_API_URL || "";
       `;
     }
 
-    // ---------- LANDING REST (single, complete version) ----------
+    // ---------- LANDING REST ----------
     function renderLandingRest(){
       return `
         <!-- BENEFITS -->
@@ -1809,7 +1809,7 @@ const API_URL = import.meta.env.PUBLIC_API_URL || "";
     "@type": "FAQPage",
     "mainEntity": [
       { "@type":"Question","name":"Is SEOScribe really a free AI writer?","acceptedAnswer":{"@type":"Answer","text":"Yes. You can generate one full article per day (2–6k words each) and one demo article per IP per month without signing in. Pro unlocks 15/day along with library, export, and analytics."}},
-      { "@type":"Question","name":"What makes this AI writing tool better for SEO?","acceptedAnswer":{"@type":"Answer","text":"We generate long-form content with citations, H2/H3 structure, hero images, A/B titles, keyword ideas, FAQs, and social posts."}},
+      { "@type":"Question","name":"What makes this AI writing tool better for SEO?","acceptedAnswer":{"@type":"Answer","text":"We generate long-form content with citations, H2/H3 structure, hero images, A/B titles, keyword ideas, FAQs and social posts."}},
       { "@type":"Question","name":"Can the article writer handle long-form content?","acceptedAnswer":{"@type":"Answer","text":"Yes. Our writer targets 2–6k words with readable sections, internal link suggestions, and optional website URL input to seed internal linking."}},
       { "@type":"Question","name":"Will my content rank on Google?","acceptedAnswer":{"@type":"Answer","text":"We structure for SEO and provide depth, keywords, citations, hero images and FAQs. Ranking also depends on your domain, links, and competition."}},
       { "@type":"Question","name":"Is there a writing tool for headlines, meta and briefs?","acceptedAnswer":{"@type":"Answer","text":"Yes—our tools include headline analyzer, readability, SERP preview, plagiarism estimation, keyword clustering and content briefs. Free: 1 use per tool/day; Pro: 10 per tool/day."}}

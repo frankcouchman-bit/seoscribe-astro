@@ -30,8 +30,6 @@ jobs:
       - name: Install
         run: npm ci
 
-      # Astro will still work even if you don't set PUBLIC_API_URL.
-      # Index file already defaults to your Worker URL.
       - name: Build
         run: npm run build
         env:

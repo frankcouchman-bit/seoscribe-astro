@@ -1,8 +1,10 @@
-# dependencies
+# Node / Astro
 node_modules
-# output
 dist
-# env
-.env
-# misc
+.cache
+.vscode
 .DS_Store
+
+# Env
+.env
+.env.*.local
